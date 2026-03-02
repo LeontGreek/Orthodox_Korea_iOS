@@ -9,7 +9,6 @@ import SwiftUI
 import WebKit
 import Combine
 
-// MARK: - Controller that owns ONE WKWebView and exposes controls
 final class WebController: NSObject, ObservableObject {
     // Expose these for enabling/disabling buttons
     @Published private(set) var canGoBack: Bool = false
@@ -21,8 +20,8 @@ final class WebController: NSObject, ObservableObject {
 
     init(
         startURL: URL,
-        useEphemeralStore: Bool = false,   // true = no persistent cache/cookies
-        forceMobileOnPad: Bool = false     // set true if you want iPad to request mobile sites
+        useEphemeralStore: Bool = false,   
+        forceMobileOnPad: Bool = false     
     ) {
         self.startURL = startURL
 
@@ -40,17 +39,14 @@ final class WebController: NSObject, ObservableObject {
         }
         config.defaultWebpagePreferences = prefs
 
-        // Init webView
         self.webView = WKWebView(frame: .zero, configuration: config)
 
         super.init()
 
-        // Basic behaviors
         self.webView.navigationDelegate = self
         self.webView.allowsBackForwardNavigationGestures = true
         self.webView.scrollView.alwaysBounceVertical = true
 
-        // Initial load (clear if persistent store)
         goHome(clearBefore: !useEphemeralStore)
     }
 
@@ -176,7 +172,6 @@ extension WebController: WKNavigationDelegate {
     }
 
     func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        // If the process is killed, try to reload gracefully
         webView.reload()
     }
 }
@@ -190,7 +185,7 @@ struct WebContainerView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        // Intentionally empty: we do NOT auto-reload on SwiftUI updates.
+        
     }
 }
 
