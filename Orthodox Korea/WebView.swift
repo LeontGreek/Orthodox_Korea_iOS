@@ -2,7 +2,7 @@
 //  WebView.swift
 //  Orthodox Korea
 //
-//  Created by LeontG Music on 12/8/25.
+//  Created by LeontG Music on 11/8/25.
 //
 
 import SwiftUI
@@ -93,6 +93,36 @@ final class WebController: NSObject, ObservableObject {
             performLoad()
         }
     }
+    
+    func changeLanguage(lang: String) {
+        let performLoad = { [weak self] in
+            guard let self else { return }
+            if lang == "el" {
+                if let url = URL(string: "https://orthodoxkorea.org/el") {
+                    self.load(url, cachePolicy: .reloadIgnoringLocalCacheData)
+                }
+            } else if lang == "ru" {
+                if let url = URL(string: "https://orthodoxkorea.org/ru") {
+                    self.load(url, cachePolicy: .reloadIgnoringLocalCacheData)
+                }
+            } else if lang == "uk" {
+                if let url = URL(string: "https://orthodoxkorea.org/uk") {
+                    self.load(url, cachePolicy: .reloadIgnoringLocalCacheData)
+                }
+            } else if lang == "ko" {
+                if let url = URL(string: "https://orthodoxkorea.org/ko") {
+                    self.load(url, cachePolicy: .reloadIgnoringLocalCacheData)
+                }
+            } else if lang == "en" {
+                if let url = URL(string: "https://orthodoxkorea.org/en") {
+                    self.load(url, cachePolicy: .reloadIgnoringLocalCacheData)
+                }
+            } else {
+                self.load(self.startURL, cachePolicy: .reloadIgnoringLocalCacheData)
+            }
+        }
+        performLoad()
+    }
 
     // MARK: - Data clearing
     /// Clears cache, cookies, local storage, etc. Calls completion on main after done.
@@ -163,3 +193,4 @@ struct WebContainerView: UIViewRepresentable {
         // Intentionally empty: we do NOT auto-reload on SwiftUI updates.
     }
 }
+
